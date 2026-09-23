@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="max-w-md mx-auto mt-8 bg-white p-6 rounded-xl shadow hover hover:shadow-2xl transition duration-300">
+
+        <h2 class="text-2xl font-bold mb-5 text-center">
+            Student Registration
+        </h2>
+
+        <form id="registrationForm">
+
+            <!-- Name -->
+            <label>Student Name</label>
+            <input type="text" id="name"
+                class="w-full border p-2 mb-3 rounded-lg">
+
+            <!-- Email -->
+            <label>Email</label>
+            <input type="text" id="email"
+                class="w-full border p-2 mb-3 rounded-lg">
+
+            <!-- Password -->
+            <label>Password</label>
+            <input type="password" id="password"
+                class="w-full border p-2 mb-3 rounded-lg">
+                <button id="passwordToggle" class="rounded-lg bg-sky-500 text-white p-2 mb-3" type="button" onclick="showpassword()">Show Password</button><br>
+
+            <!-- Mobile -->
+            <label>Mobile Number</label>
+            <input type="text" id="mobile"
+                class="w-full border p-2 mb-4 rounded-lg">
+
+            <button type="submit"
+                class="w-full bg-green-500 text-white p-2 rounded-lg">
+                Register
+            </button>
+
+            <p id="message" class="mt-4 text-center"></p>
+
+        </form>
+    </div>
+
+
+    <script>
+        function showpassword() {
+            let passwordField = document.getElementById("password");
+            let passwordToggle = document.getElementById("passwordToggle");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordToggle.textContent = "Hide Password";
+            } else {
+                passwordField.type = "password";
+                passwordToggle.textContent = "Show Password";
+            }
+        }
+        document.getElementById("registrationForm").onsubmit = function(event) {
+
+            event.preventDefault();
+
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let mobile = document.getElementById("mobile").value;
+
+        
+            // Mandatory fields
+            if (name == "" || email == "" || password == "" || mobile == "") {
+                message.innerHTML = "Please fill all fields.";
+                message.className = "mt-4 text-center text-red-500";
+                return;
+            }
+
+            // Email validation
+            if (!email.includes("@") || !email.includes(".")) {
+                message.innerHTML = "Enter a valid email.";
+                message.className = "mt-4 text-center text-red-500";
+                return;
+            }
+
+            // Password validation
+            if (password.length < 6) {
+                message.innerHTML = "Password must be at least 6 characters.";
+                message.className = "mt-4 text-center text-red-500";
+                return;
+            }
+
+            if(!password.includes("@") && !password.includes("#") && !password.includes("$") && !password.includes("%")) {
+                message.innerHTML = "Password must contain at least one special character (@, #, $, %).";
+                message.className = "mt-4 text-center text-red-500";
+                return;
+            }
+
+            // Mobile validation
+            if (mobile.length != 10 || isNaN(mobile)) {
+                message.innerHTML = "Enter a valid 10-digit mobile number.";
+                message.className = "mt-4 text-center text-red-500";
+                return;
+            }
+
+            // Success
+            message.innerHTML = "Registration Successful!";
+            message.className = "mt-4 text-center text-green-500";
+
+        };
+
+    </script>
+
+</body>
+</html>
